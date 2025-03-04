@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Printable A4 Page</title>
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <section class="double-column" style="height: 30mm; margin-bottom: 10mm">
+      <div style="border: 2px solid rgb(68, 114, 196); padding: auto">
+        <img src="{{image}}" alt="" width="130" height="90" />
+      </div>
+      <div style="padding: auto; min-width: 150mm">
+        <h3 style="text-align: center">{{ Column1 }}</h3>
+      </div>
+    </section>
+
+    <section
+      style="
+        border: 1px solid rgb(68, 114, 196);
+        padding: 10px;
+        box-sizing: border-box;
+        min-height: 40mm;
+      "
+    >
+      <h4 class="" style="font-family: sans-serif">{{ Column2 }}</h4>
+      <p style="letter-spacing: 0.3mm">{{ Column3 }}</p>
+    </section>
+  </body>
+</html>
