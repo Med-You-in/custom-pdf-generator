@@ -1,7 +1,3 @@
-To enhance the documentation and provide real-world instructions for using these scripts, let's break down the steps and provide detailed guidance:
-
----
-
 ## **Custom PDF Generator**
 
 ### **Project Documentation**
