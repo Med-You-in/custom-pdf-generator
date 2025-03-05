@@ -1,43 +1,98 @@
 import os
 import requests
 import pandas as pd
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 IMAGE_SUFFIX = "_image.jpg"
 DOC_PREFIX = "documents/"
-# Use this if you have a set of images on a column on your data excel file
+
 # Specify the path to your Excel file and the output folder
 excel_path = DOC_PREFIX + "data-1.xlsx"
 column_name = "liendulogo"
 output_folder = DOC_PREFIX + "images_MS"
 
 
-def download_images(excel_path, output_folder):
-    # Read the Excel file
-    df = pd.read_excel(excel_path)
+def read_excel_file(file_path):
+    """
+    Read the Excel file and return a DataFrame.
 
-    # Ensure the output folder exists
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
+    Args:
+        file_path (str): The path to the Excel file.
 
-    # Loop through the selected column on column_name
+    Returns:
+        pd.DataFrame: The DataFrame containing the Excel data.
+    """
+    try:
+        df = pd.read_excel(file_path)
+        logging.info(f"Successfully read Excel file: {file_path}")
+        return df
+    except Exception as e:
+        logging.error(f"Error reading Excel file: {e}")
+        return pd.DataFrame()
+
+
+def create_output_directory(directory_path):
+    """
+    Create the output directory if it doesn't exist.
+
+    Args:
+        directory_path (str): The path to the output directory.
+    """
+    if not os.path.exists(directory_path):
+        os.makedirs(directory_path)
+        logging.info(f"Created output directory: {directory_path}")
+
+
+def download_image(image_url, file_path):
+    """
+    Download an image from a URL and save it to the specified file path.
+
+    Args:
+        image_url (str): The URL of the image to download.
+        file_path (str): The path where the image will be saved.
+
+    Returns:
+        bool: True if the download was successful, False otherwise.
+    """
+    try:
+        response = requests.get(image_url)
+        response.raise_for_status()  # Raise an error on bad status
+
+        with open(file_path, "wb") as file:
+            file.write(response.content)
+        logging.info(f"Downloaded image to {file_path}")
+        return True
+    except requests.RequestException as e:
+        logging.error(f"Failed to download {image_url}: {e}")
+        return False
+
+
+def download_images(excel_path, output_folder, column_name):
+    """
+    Download images from URLs in the specified column of the Excel file.
+
+    Args:
+        excel_path (str): The path to the Excel file.
+        output_folder (str): The path to the output folder.
+        column_name (str): The name of the column containing image URLs.
+    """
+    df = read_excel_file(excel_path)
+    create_output_directory(output_folder)
+
     for index, row in df.iterrows():
         image_url = row[column_name]
-        # Check if the URL is a valid URL
         if pd.isna(image_url):
             continue
 
-        try:
-            # Download the image
-            response = requests.get(image_url)
-            response.raise_for_status()  # Raise an error on bad status
-
-            # Save the image to the specified folder
-            file_path = os.path.join(output_folder, f"{index}{IMAGE_SUFFIX}")
-            with open(file_path, "wb") as file:
-                file.write(response.content)
-            print(f"Downloaded {file_path}")
-        except requests.RequestException as e:
-            print(f"Failed to download {image_url}: {e}")
+        file_path = os.path.join(output_folder, f"{index}{IMAGE_SUFFIX}")
+        download_image(image_url, file_path)
 
 
-download_images(excel_path, output_folder)
+if __name__ == "__main__":
+    download_images(excel_path, output_folder, column_name)
+    logging.info("Image download process completed.")
