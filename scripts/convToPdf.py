@@ -2,28 +2,31 @@ import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 import pdfkit
 import os
+from dotenv import load_dotenv  # Import the load_dotenv function
 
-#  Initialize the Generator environment and options =======================================================================================
-# *************** Check those before running the script *****************
-DATA_FILE_NAME = "data-1.xlsx"
-SHEET_NAME = "Sheet1"
-IMAGES_ABSOLUTE_PATH = (
-    "....\documents\images\\"  # set the absolute path for the the images if exists
-)
-# ***********************************************************************
+# Load environment variables from .env file
+load_dotenv()
 
-#  Set the following variables according to your needs
-DOC_PREFIX = "documents/"
+# Initialize the Generator environment and options =======================================================================================
+# Load configuration from environment variables
+DATA_FILE_NAME = os.getenv("DATA_FILE_NAME")
+SHEET_NAME = os.getenv("SHEET_NAME")
+IMAGES_ABSOLUTE_PATH = os.getenv("IMAGES_ABSOLUTE_PATH")
+TEMPLATES_FOLDER = os.getenv("TEMPLATES_FOLDER")
+DATA_FOLDER = os.getenv("DATA_FOLDER")
+DOC_PREFIX = os.getenv("DOC_PREFIX")
+WK_HTML_TO_PDF = os.getenv("WK_HTML_TO_PDF")
+
+# Set the following variables according to your needs
 OUTPUT_FOLDER = "generated_pdfs"
 EXCEPTIONS_FILE_NAME = "exceptions.xlsx"
 HTML_FILE = "pdf_template.html"
-WK_HTML_TO_PDF = "C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe" # try to install wkhtmltopdf from https://wkhtmltopdf.org/downloads.html
 IMAGE_SUFFIX = "_image.jpg"
 
 # Initialize the Generator environment and options
 options = {
     "enable-local-file-access": True,
-    "page-size": "Letter",
+    "page-size": "A4",
     "margin-top": "0in",
     "margin-right": "0in",
     "margin-bottom": "0in",
@@ -94,7 +97,7 @@ df_list = []
 
 for sheet_name in [SHEET_NAME]:  # Specify your sheet names
     df = pd.read_excel(
-        DOC_PREFIX + DATA_FILE_NAME, sheet_name=sheet_name, engine="openpyxl", header=0
+        DATA_FOLDER + DATA_FILE_NAME, sheet_name=sheet_name, engine="openpyxl", header=0
     )
     df_list.append(df)
 
@@ -102,7 +105,6 @@ df_combined = pd.concat(df_list, ignore_index=False)
 
 # Clean the data
 for column in df_combined.columns:
-
     if column == "Column1":
         df_combined[column] = df_combined[column].apply(
             lambda x: clean_col(x) if isinstance(x, str) else x
@@ -129,7 +131,7 @@ df_combined["image"] = df_combined.index.to_series().apply(
 
 # Setup Jinja2 environment
 env = Environment(loader=FileSystemLoader("."))
-template = env.get_template(DOC_PREFIX + HTML_FILE)
+template = env.get_template(TEMPLATES_FOLDER + HTML_FILE)
 
 if not os.path.exists(DOC_PREFIX + OUTPUT_FOLDER):
     os.makedirs(DOC_PREFIX + OUTPUT_FOLDER)
