@@ -7,25 +7,36 @@
     <link rel="stylesheet" href="../assets/styles.css" />
   </head>
   <body>
-    <section class="double-column" style="height: 30mm; margin-bottom: 10mm">
-      <div style="border: 2px solid rgb(68, 114, 196); padding: auto">
-        <img src="{{ image }}" alt="" width="130" height="90" />
+    <!-- Header Section -->
+    <section class="double-column" style="margin-bottom: 20px;">
+      <div style="text-align: center;">
+        <img src="{{ image }}" alt="Logo" width="130" height="90" />
       </div>
-      <div style="padding: auto; min-width: 150mm">
-        <h3 style="text-align: center">{{ Column1 }}</h3>
+      <div>
+        <h3>{{ Column1 }}</h3>
       </div>
     </section>
 
-    <section
-      style="
-        border: 1px solid rgb(68, 114, 196);
-        padding: 10px;
-        box-sizing: border-box;
-        min-height: 40mm;
-      "
-    >
-      <h4 class="" style="font-family: sans-serif">{{ Column2 }}</h4>
-      <p style="letter-spacing: 0.3mm">{{ Column3 }}</p>
+    <!-- Content Section -->
+    <section style="border: 1px solid rgb(68, 114, 196); padding: 20px; border-radius: 8px; background-color: #fff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+      <h4>{{ Column2 }}</h4>
+      <p style="margin-top: 10px;">{{ Column3 }}</p>
+    </section>
+
+    <!-- Additional Section (Example) -->
+    <section style="margin-top: 20px;">
+      <h4>Additional Information</h4>
+      <div class="checkbox-group">
+        <label>
+          <input type="checkbox" /> Option 1
+        </label>
+        <label>
+          <input type="checkbox" /> Option 2
+        </label>
+        <label>
+          <input type="checkbox" /> Option 3
+        </label>
+      </div>
     </section>
   </body>
 </html>

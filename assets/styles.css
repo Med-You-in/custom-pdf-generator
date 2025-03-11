@@ -1,146 +1,72 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-.roboto-thin {
-  font-family: "Roboto", sans-serif;
-  font-weight: 100;
-  font-style: normal;
-}
-
-.roboto-light {
-  font-family: "Roboto", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-}
-
-.roboto-regular {
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.roboto-medium {
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-  font-style: normal;
-}
-
-.roboto-bold {
-  font-family: "Roboto", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.roboto-black {
-  font-family: "Roboto", sans-serif;
-  font-weight: 900;
-  font-style: normal;
-}
-
-.roboto-thin-italic {
-  font-family: "Roboto", sans-serif;
-  font-weight: 100;
-  font-style: italic;
-}
-
-.roboto-light-italic {
-  font-family: "Roboto", sans-serif;
-  font-weight: 300;
-  font-style: italic;
-}
-
-.roboto-regular-italic {
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
-  font-style: italic;
-}
-
-.roboto-medium-italic {
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-  font-style: italic;
-}
-
-.roboto-bold-italic {
-  font-family: "Roboto", sans-serif;
-  font-weight: 700;
-  font-style: italic;
-}
-
-.roboto-black-italic {
-  font-family: "Roboto", sans-serif;
-  font-weight: 900;
-  font-style: italic;
-}
-
-/* General page styles */
+/* General styles */
 body {
-  display: flex;
-  flex-direction: column;
+  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 15mm;
   box-sizing: border-box;
+  background-color: #f9f9f9;
+  color: #333;
 }
 
+/* Section styling */
 section {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   box-sizing: border-box;
 }
 
-/* Format text in CSS for both left and right ends align in long paragraphs */
-p {
-  font-family: sans-serif;
-  text-align: justify;
-}
-
-/* Fixed height sections */
-section.fixed-height {
-  flex-grow: 0;
-  height: 50mm;
-}
-
-/* Adjustments for double-column sections */
+/* Double-column layout */
 .double-column {
-  display: -webkit-box;
-  -webkit-box-orient: horizontal;
-  -webkit-box-pack: justify;
-  -webkit-box-align: stretch;
-  gap: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
 }
 
 .double-column div {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
   flex: 1;
   border: 2px solid rgb(68, 114, 196);
-  padding: 10px;
+  padding: 15px;
   box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.double-column div:not(:last-child) {
-  margin-right: 20px;
+.double-column div img {
+  display: block;
+  margin: 0 auto;
 }
 
-.double-column div.large {
-  width: 160mm;
+/* Header styling */
+h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: rgb(68, 114, 196);
+  text-align: center;
+  margin: 0;
 }
 
-.double-column div.medium {
-  width: 90mm;
+h4 {
+  font-size: 20px;
+  font-weight: 500;
+  color: rgb(68, 114, 196);
+  margin: 0 0 10px 0;
 }
 
-.double-column div.small {
-  width: 10mm;
+/* Paragraph styling */
+p {
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: justify;
+  margin: 0;
 }
 
+/* Checkbox group styling */
 .checkbox-group {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
   justify-content: flex-start;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
@@ -149,6 +75,7 @@ section.fixed-height {
 .checkbox-group label {
   display: flex;
   align-items: center;
+  font-size: 14px;
 }
 
 .checkbox-group input[type="checkbox"] {
@@ -162,5 +89,10 @@ section.fixed-height {
     height: 297mm;
     transform: scale(0.98);
     padding: 15mm;
+    background-color: #fff;
+  }
+
+  .double-column div {
+    box-shadow: none;
   }
 }
